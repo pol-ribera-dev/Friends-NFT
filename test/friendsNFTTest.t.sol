@@ -6,9 +6,9 @@ import "../src/friendsNFT.sol";
 
 // Test of FriendsNFT.sol with 100% coverage
 
-contract TMTest is Test {
+contract FriendsNFTTest is Test {
 
-    CadenaTM nft;
+    friendsNFT nft;
 
     address owner = address(1);
     address user = address(2);
