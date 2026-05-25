@@ -6,9 +6,9 @@ import "../src/friendsNFT.sol";
 
 // Test of FriendsNFT.sol with 100% coverage
 
-contract FriendsNFTTest is Test {
+contract TMTest is Test {
 
-    friendsNFT nft;
+    CadenaTM nft;
 
     address owner = address(1);
     address user = address(2);
@@ -24,7 +24,6 @@ contract FriendsNFTTest is Test {
     function setUp() public {
         vm.prank(owner);
         nft = new friendsNFT(name_, symbol_);
-        vm.stopPrank();
     }
 
     function testDeployCorrect() public {
@@ -37,21 +36,17 @@ contract FriendsNFTTest is Test {
         vm.prank(user);
         vm.expectRevert();
         nft.createNFT(user, tokenName, cidImage, who, title);
-        vm.stopPrank();
     }
 
     function testOwnerCanMint() public {
         vm.prank(owner);
         nft.createNFT(user, tokenName, cidImage, who, title);
-
         assertEq(nft.ownerOf(0), user);
-        vm.stopPrank();
     }
 
     function testCorrectData() public {
         vm.prank(owner);
         nft.createNFT(user, tokenName, cidImage, who, title);
-        vm.stopPrank();
 
         string memory base64 = "data:application/json;base64,eyJuYW1lIjogInRlc3QiLCJkZXNjcmlwdGlvbiI6ICJQb2xzIEZyaWVuZCAiLCJpbWFnZSI6ICJpcGZzOi8vYmFmeWJlaWNobG5oYmx0NzV6eGd1bWt6ZWFlbm10NDNrcjVhaWxzaHJieWs1eG01dmhjZjNxbmN5cmUiLCJhdHRyaWJ1dGVzIjogW3sidHJhaXRfdHlwZSI6ICJSZWxhdGlvbnNoaXAiLCAidmFsdWUiOiAiYmVzdCBmcmllbmQifSx7InRyYWl0X3R5cGUiOiAiQWNoaWV2ZW1lbnQiLCAidmFsdWUiOiAiR09EIn1dfQ==";
         /* Is base64 of:
@@ -60,7 +55,7 @@ contract FriendsNFTTest is Test {
         assertEq(nft.tokenURI(0), base64);
     }
 
-    function testTwoMind() public {
+    function testTwoMindCorrect() public {
         vm.startPrank(owner);
 
         uint256 firstId = nft.id();
@@ -82,51 +77,42 @@ contract FriendsNFTTest is Test {
     function testTransferFromReverts() public {
         vm.prank(owner);
         nft.createNFT(user, tokenName, cidImage, who, title);
-        vm.stopPrank();
-
+        
         vm.prank(user);
         vm.expectRevert("Soulbound");
         nft.transferFrom(user, owner, 0);
-        vm.stopPrank();
     }
 
     function testSafeTransferFromWithDataReverts() public {
         vm.prank(owner);
         nft.createNFT(user, tokenName, cidImage, who, title);
-        vm.stopPrank();
+        
 
         vm.prank(user);
         vm.expectRevert("Soulbound");
         nft.safeTransferFrom(user, owner, 0, "");
-        vm.stopPrank();
     }
 
-     function testSafeTransferFromWithoutData() public {
+     function testSafeTransferFromWithoutDataReverts() public {
         vm.prank(owner);
         nft.createNFT(user, tokenName, cidImage, who, title);
-
-        vm.stopPrank();
 
         vm.prank(user);
         vm.expectRevert("Soulbound");
         nft.safeTransferFrom(user, owner, 0);
-        vm.stopPrank();
     }
 
     function testMintToZeroAddressReverts() public {
         vm.prank(owner);
         vm.expectRevert();
         nft.createNFT(address(0), tokenName, cidImage, who, title);
-        vm.stopPrank();
-
     }
 
-    function testEmptyStrings() public {
+    function testEmptyStringsCorrect() public {
         vm.prank(owner);
         nft.createNFT(user, "", "", "", "");
 
         string memory uri = nft.tokenURI(0);
         assertTrue(bytes(uri).length > 0);
-        vm.stopPrank();
     }
 }

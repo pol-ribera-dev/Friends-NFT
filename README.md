@@ -1,4 +1,4 @@
-FriendsNFT 
+# FriendsNFT 
 
 FriendsNFT is a Solidity smart contract project that allows the creation of Soulbound NFTs (non-transferable NFTs) designed to work as a digital Friendship Card.
 
