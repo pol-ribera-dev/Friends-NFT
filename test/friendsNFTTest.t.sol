@@ -2,7 +2,7 @@
 pragma solidity 0.8.24;
 
 import "forge-std/Test.sol";
-import "../src/friendsNFT.sol";
+import "../src/FriendsNFT.sol";
 
 // Test of FriendsNFT.sol with 100% coverage
 
