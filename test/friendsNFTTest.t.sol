@@ -7,15 +7,14 @@ import "../src/friendsNFT.sol";
 // Test of FriendsNFT.sol with 100% coverage
 
 contract FriendsNFTTest is Test {
-
     friendsNFT nft;
 
     address owner = address(1);
     address user = address(2);
 
     string name_ = "Friends NFT";
-    string symbol_ = "LOL"; 
-    
+    string symbol_ = "LOL";
+
     string tokenName = "test";
     string cidImage = "bafybeichlnhblt75zxgumkzeaenmt43kr5ailshrbyk5xm5vhcf3qncyre";
     string who = "best friend";
@@ -48,7 +47,8 @@ contract FriendsNFTTest is Test {
         vm.prank(owner);
         nft.createNFT(user, tokenName, cidImage, who, title);
 
-        string memory base64 = "data:application/json;base64,eyJuYW1lIjogInRlc3QiLCJkZXNjcmlwdGlvbiI6ICJQb2xzIEZyaWVuZCAiLCJpbWFnZSI6ICJpcGZzOi8vYmFmeWJlaWNobG5oYmx0NzV6eGd1bWt6ZWFlbm10NDNrcjVhaWxzaHJieWs1eG01dmhjZjNxbmN5cmUiLCJhdHRyaWJ1dGVzIjogW3sidHJhaXRfdHlwZSI6ICJSZWxhdGlvbnNoaXAiLCAidmFsdWUiOiAiYmVzdCBmcmllbmQifSx7InRyYWl0X3R5cGUiOiAiQWNoaWV2ZW1lbnQiLCAidmFsdWUiOiAiR09EIn1dfQ==";
+        string memory base64 =
+            "data:application/json;base64,eyJuYW1lIjogInRlc3QiLCJkZXNjcmlwdGlvbiI6ICJQb2xzIEZyaWVuZCAiLCJpbWFnZSI6ICJpcGZzOi8vYmFmeWJlaWNobG5oYmx0NzV6eGd1bWt6ZWFlbm10NDNrcjVhaWxzaHJieWs1eG01dmhjZjNxbmN5cmUiLCJhdHRyaWJ1dGVzIjogW3sidHJhaXRfdHlwZSI6ICJSZWxhdGlvbnNoaXAiLCAidmFsdWUiOiAiYmVzdCBmcmllbmQifSx7InRyYWl0X3R5cGUiOiAiQWNoaWV2ZW1lbnQiLCAidmFsdWUiOiAiR09EIn1dfQ==";
         /* Is base64 of:
             {"name": "test","description": "Pols Friend ","image": "ipfs://bafybeichlnhblt75zxgumkzeaenmt43kr5ailshrbyk5xm5vhcf3qncyre","attributes": [{"trait_type": "Relationship", "value": "best friend"},{"trait_type": "Achievement", "value": "GOD"}]}
         */
@@ -59,7 +59,7 @@ contract FriendsNFTTest is Test {
         vm.startPrank(owner);
 
         uint256 firstId = nft.id();
-        
+
         nft.createNFT(user, tokenName, cidImage, who, title);
 
         uint256 secondId = nft.id();
@@ -77,7 +77,7 @@ contract FriendsNFTTest is Test {
     function testTransferFromReverts() public {
         vm.prank(owner);
         nft.createNFT(user, tokenName, cidImage, who, title);
-        
+
         vm.prank(user);
         vm.expectRevert("Soulbound");
         nft.transferFrom(user, owner, 0);
@@ -86,14 +86,13 @@ contract FriendsNFTTest is Test {
     function testSafeTransferFromWithDataReverts() public {
         vm.prank(owner);
         nft.createNFT(user, tokenName, cidImage, who, title);
-        
 
         vm.prank(user);
         vm.expectRevert("Soulbound");
         nft.safeTransferFrom(user, owner, 0, "");
     }
 
-     function testSafeTransferFromWithoutDataReverts() public {
+    function testSafeTransferFromWithoutDataReverts() public {
         vm.prank(owner);
         nft.createNFT(user, tokenName, cidImage, who, title);
 

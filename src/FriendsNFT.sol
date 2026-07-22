@@ -2,18 +2,18 @@
 
 pragma solidity 0.8.24;
 
-/*  
+/*
     @title FriendsNFT
 
-    @notice This contract allows the deployer to create NFTs (soulbound) for their friends in order to identify and verify them.  
+    @notice This contract allows the deployer to create NFTs (soulbound) for their friends in order to identify and verify them.
             Each NFT contains the following data:
             - Name
             - Image
             - Relationship
             - Nickname
-    
-    @dev This contract is based on ERC721.  
-         To keep the metadata and images decentralized and accessible on-chain, 
+
+    @dev This contract is based on ERC721.
+         To keep the metadata and images decentralized and accessible on-chain,
          Pinata/IPFS is used for image storage.
 */
 
@@ -21,13 +21,11 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 
-
 contract friendsNFT is ERC721, Ownable {
-    
-    // DATA 
+    // DATA
 
     /// @dev Maps a token ID to its associated metadata.
-    mapping(uint => TokenData) public IdToData;
+    mapping(uint256 => TokenData) public IdToData;
 
     /// @dev Structure containing the NFT metadata.
     struct TokenData {
@@ -41,15 +39,12 @@ contract friendsNFT is ERC721, Ownable {
     ///      The next token minted will use this ID.
     uint256 public id;
 
-
     // CONSTRUCTOR
 
     /// @dev Inicializate the contract, the owner is the deployer
-    /// @param name_  Name of the ERC721 token 
+    /// @param name_  Name of the ERC721 token
     /// @param symbol_ Symbol of the ERC721 token
-    constructor(string memory name_, string memory symbol_) ERC721(name_, symbol_) Ownable(msg.sender) {
-    }
-
+    constructor(string memory name_, string memory symbol_) ERC721(name_, symbol_) Ownable(msg.sender) {}
 
     // EVENT
 
@@ -57,7 +52,6 @@ contract friendsNFT is ERC721, Ownable {
     /// @param userAddress_ Address receiving the NFT.
     /// @param tokenId_ ID of the minted token.
     event MintNFT(address userAddress_, uint256 tokenId_);
-
 
     // EXTERNAL FUNCTIONS
 
@@ -78,32 +72,45 @@ contract friendsNFT is ERC721, Ownable {
     /// @param _who Relationship with the NFT owner.
     /// @param _title Nickname or special title of the friend.
     /// Emits a {MintNFT} event.
-    function createNFT(address _address, string memory _name, string memory _image, string memory _who, string memory _title) external onlyOwner{
+    function createNFT(
+        address _address,
+        string memory _name,
+        string memory _image,
+        string memory _who,
+        string memory _title
+    ) external onlyOwner {
         IdToData[id] = TokenData(_name, _image, _who, _title);
         _safeMint(_address, id);
-        emit MintNFT(_address, id); 
+        emit MintNFT(_address, id);
         id++;
     }
 
     /// @dev Overrides the tokenURI(uint256 tokenId) function to return the metadata associated with the given token ID, stored in the `idToData` mapping.
     /// @param tokenId Token ID to query.
-    function tokenURI(uint256 tokenId) public view override virtual returns (string memory) {
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         _requireOwned(tokenId);
         TokenData memory data = IdToData[tokenId];
 
-        string memory json = string(abi.encodePacked(
-            '{"name": "', data.name, '",',
-            '"description": "Pols Friend ",',
-            '"image": "ipfs://', data.image, '",',
-            '"attributes": [{"trait_type": "Relationship", "value": "', data.who, '"},',
-            '{"trait_type": "Achievement", "value": "', data.title, '"}]}'
-        ));
+        string memory json = string(
+            abi.encodePacked(
+                '{"name": "',
+                data.name,
+                '",',
+                '"description": "Pols Friend ",',
+                '"image": "ipfs://',
+                data.image,
+                '",',
+                '"attributes": [{"trait_type": "Relationship", "value": "',
+                data.who,
+                '"},',
+                '{"trait_type": "Achievement", "value": "',
+                data.title,
+                '"}]}'
+            )
+        );
 
         string memory encoded = Base64.encode(bytes(json));
 
-        return string(abi.encodePacked(
-            "data:application/json;base64,",
-            encoded
-        ));
+        return string(abi.encodePacked("data:application/json;base64,", encoded));
     }
 }
