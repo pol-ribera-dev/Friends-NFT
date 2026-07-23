@@ -7,7 +7,7 @@ Nowadays, identity theft and impersonation are common problems on the internet, 
 
 Additionally, having all friends grouped under the same NFT collection makes it easier to manage a private community and grant access to future projects, utilities, events, or exclusive experiences.
 
-## How to use it:
+## How to use it
 All the code for this project is contained in the [FriendsNFT.sol](https://github.com/pol-ribera-dev/Friends-NFT/blob/main/src/FriendsNFT.sol) file.
 
 Notice that only the account that deployed the contract is authorized to mint NFTs. Each NFT collection is personal, since everyone has their own friends. Therefore, the first step is to deploy your own contract with the collection name and symbol of your choice.
@@ -21,7 +21,7 @@ Minting an NFT is very straightforward. Simply call the contract's createNFT() f
 
 The recipient does not need to perform any action. Once the NFT is minted, it is automatically transferred to their wallet.
 
-To store and obtain the IPFS CIDs for my NFT images, I used [Pinata](https://pinata.cloud/), which provides reliable and persistent IPFS pinning.
+To store and obtain the IPFS CIDs for my NFT images, I used [Pinata](https://pinata.cloud/). It provides reliable and persistent IPFS pinning.
 
 ## Testing
 All functions have [tests](https://github.com/pol-ribera-dev/Friends-NFT/blob/main/test/friendsNFTTest.t.sol) implemented. To execute these tests:
