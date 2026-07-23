@@ -15,7 +15,7 @@ Notice that only the account that deployed the contract is authorized to mint NF
 Minting an NFT is very straightforward. Simply call the contract's createNFT() function with the following parameters:
 1. **Recipient address** - Wallet address of your friend
 2. **Name associated with the NFT** - Name of your friend
-3. **IPFS CID of the NFT image**- Image of your friend
+3. **IPFS CID of the NFT image** - Image of your friend
 4. **The relationship with the NFT owner** - A title for your friendship
 5. **Nickname or special title** - Nickname of your firend
 
