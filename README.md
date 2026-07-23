@@ -24,7 +24,7 @@ The recipient does not need to perform any action. Once the NFT is minted, it is
 To store and obtain the IPFS CIDs for my NFT images, I used [Pinata](https://pinata.cloud/), which provides reliable and persistent IPFS pinning.
 
 ## Testing
-All functions in the protocol have [tests](https://github.com/pol-ribera-dev/Friends-NFT/blob/main/test/friendsNFTTest.t.sol) implemented. To execute these tests:
+All functions have [tests](https://github.com/pol-ribera-dev/Friends-NFT/blob/main/test/friendsNFTTest.t.sol) implemented. To execute these tests:
 
 ```bash
 forge test
